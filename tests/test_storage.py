@@ -29,7 +29,7 @@ class StorageTest(TestCase):
 
     async def test_list_compras_by_data(self):
         compra = Compra(valor=20, card_id="11", data="2020-02-26")
-        self.storage.save_compra(compra.card_id, compra)
+        self.storage.save_compra("11", compra)
 
         self.assertEqual(
             [compra], self.storage.list_compras_by_date("2020-02-26")
@@ -38,6 +38,6 @@ class StorageTest(TestCase):
 
     async def test_save_nova_compra(self):
         compra = Compra(valor=20, card_id="11", data="2020-02-26")
-        self.storage.save_compra(compra.card_id, compra)
+        self.storage.save_compra("11", compra)
 
         self.assertEqual([compra], self.storage.list_compras_by_card_id("11"))

@@ -50,7 +50,7 @@ class CardService:
 
     @classmethod
     def save_compra(cls, card_id: str, compra: Compra):
-        cls.storage.save_compra(card_id, compra)
+        raise NotImplementedError
 
     @classmethod
     def list_compras_by_card_id(cls, card_id: str) -> List[Compra]:

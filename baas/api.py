@@ -31,8 +31,9 @@ async def get_card_by_id(card_id: str) -> Card:
 
 @app.route(["/cards/{card_id}/compra"], type=RouteTypes.HTTP, methods=["POST"])
 @parse_body(Compra)
-async def nova_compra(compra: Compra) -> Compra:
-    CardService.save_compra(compra.card_id, compra)
+@parse_id(str)
+async def nova_compra(card_id: str, compra: Compra) -> Compra:
+    CardService.save_compra(card_id, compra)
     return web.json_response(compra.dict())
 
 
