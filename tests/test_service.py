@@ -23,7 +23,7 @@ class ServiceTest(TestCase):
         card = Card(numero="10", acc_id="1234")
 
         await CardService.save_card(card.acc_id, card)
-        CardService.save_compra(compra.card_id, compra)
+        CardService.save_compra("10", compra)
 
         self.assertEqual([compra], CardService.list_compras_by_card_id("10"))
 

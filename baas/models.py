@@ -15,5 +15,4 @@ class Card(BaseModel):
 
 class Compra(BaseModel):
     valor: int
-    card_id: str
     data: str
