@@ -1,5 +1,3 @@
-from typing import Optional
-
 from pydantic import BaseModel
 
 
@@ -10,9 +8,9 @@ class Account(BaseModel):
 
 class Card(BaseModel):
     numero: str
+    acc_id: str
     limite: int = 15000
     bloqueado: bool = False
-    acc_id: str
 
 
 class Compra(BaseModel):

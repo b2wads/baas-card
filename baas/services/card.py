@@ -37,21 +37,21 @@ class CardService:
     storage = CardStorage()
 
     @classmethod
-    async def save(cls, card: Card):
-        raise NotImplementedError
+    async def save_card(cls, acc_id: str, card: Card):
+        cls.storage.save_card(acc_id, card)
 
     @classmethod
-    def list(cls) -> List[Card]:
-        raise NotImplementedError
+    def list_cards(cls) -> List[Card]:
+        return cls.storage.list_cards()
 
     @classmethod
-    def get_by_id(cls, card_id: str) -> List[Card]:
-        raise NotImplementedError
+    def get_card_by_id(cls, card_id: str) -> Card:
+        return cls.storage.get_by_card_id(card_id)
+
+    @classmethod
+    def save_compra(cls, card_id: str, compra: Compra):
+        cls.storage.save_compra(card_id, compra)
 
     @classmethod
     def list_compras_by_card_id(cls, card_id: str) -> List[Compra]:
-        raise NotImplementedError
-
-    @classmethod
-    def nova_compra(cls, card_id: str, compra: Compra):
-        raise NotImplementedError
+        return cls.storage.list_compras_by_card_id(card_id)

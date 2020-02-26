@@ -1,31 +1,31 @@
-from asynctest import TestCase, mock
+from asynctest import TestCase
 
-from baas.models import Saque
-from baas.services.saque import SaqueService, SaqueStorage
+from baas.models import Card, Compra
+from baas.services.card import CardService
 
 
 class ServiceTest(TestCase):
-    async def test_list_saques_by_acc_id(self):
-        storage = SaqueStorage()
-        with mock.patch.object(SaqueService, "storage", storage):
-            saque = Saque(data="2020-02-26", valor=200)
-            storage.save("123", saque)
-            self.assertEqual([saque], SaqueService.list_by_acc_id("123"))
+    async def test_save_card(self):
+        card = Card(numero="10", acc_id="1234")
+        await CardService.save_card(card.acc_id, card)
+        self.assertEqual(card, CardService.get_card_by_id("10"))
 
-    async def test_list_saques_by_acc_id_empty_result(self):
-        self.assertEqual([], SaqueService.list_by_acc_id("42"))
+    async def test_list_all_card(self):
+        card = Card(numero="10", acc_id="1234")
+        card_2 = Card(numero="11", acc_id="4321")
+        await CardService.save_card(card.acc_id, card)
+        await CardService.save_card(card_2.acc_id, card_2)
 
-    async def test_list_saques_by_date(self):
-        storage = SaqueStorage()
-        with mock.patch.object(SaqueService, "storage", storage):
-            saque_1 = Saque(data="2020-02-26", valor=200)
-            saque_2 = Saque(data="2020-02-26", valor=300)
-            storage.save("123", saque_1)
-            storage.save("123", saque_2)
-            self.assertEqual(
-                [saque_1, saque_2],
-                SaqueService.list_by_date("123", "2020-02-26"),
-            )
+        self.assertEqual([card, card_2], CardService.list_cards())
 
-    async def test_list_saques_by_date_empty_result(self):
-        self.assertEqual([], SaqueService.list_by_date("42", "2020-02-26"))
+    async def test_save_compra(self):
+        compra = Compra(data="2020-02-26", valor=100, card_id="10")
+        card = Card(numero="10", acc_id="1234")
+
+        await CardService.save_card(card.acc_id, card)
+        CardService.save_compra(compra.card_id, compra)
+
+        self.assertEqual([compra], CardService.list_compras_by_card_id("10"))
+
+    async def test_list_compra_por_card_id_empty_list(self):
+        self.assertEqual([], CardService.list_compras_by_card_id("10"))
