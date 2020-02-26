@@ -2,8 +2,7 @@ from asynctest import TestCase
 from asyncworker.testing import HttpClientContext
 
 from baas.api import app
-from baas.models import Saque
-from baas.services.saque import SaqueService
+from baas.services.card import CardService
 
 
 class SaqueAPITest(TestCase):
