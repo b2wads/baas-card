@@ -1,11 +1,14 @@
 from collections import defaultdict
-from typing import List
+from typing import List, Optional
 
 from baas.models import Card, Compra
 
 
 class CardStorage:
     def __init__(self):
+        self.clear()
+
+    def clear(self):
         self.__card_by_acc_id = defaultdict(list)
         self.__compra_by_card_id = defaultdict(list)
         self.__card_by_id = {}
@@ -15,8 +18,8 @@ class CardStorage:
         self.__card_by_acc_id[acc_id].append(card)
         self.__card_by_id[card.numero] = card
 
-    def get_by_card_id(self, card_id: str) -> Card:
-        return self.__card_by_id[card_id]
+    def get_by_card_id(self, card_id: str) -> Optional[Card]:
+        return self.__card_by_id.get(card_id)
 
     def list_cards(self):
         return [card[1] for card in self.__card_by_id.items()]
