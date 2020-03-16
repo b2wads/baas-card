@@ -41,3 +41,12 @@ class StorageTest(TestCase):
         self.storage.save_compra("11", compra)
 
         self.assertEqual([compra], self.storage.list_compras_by_card_id("11"))
+
+    async def test_clear_storage(self):
+        card = Card(numero="11", acc_id=self.acc_id)
+        self.storage.save_card(card.acc_id, card)
+
+        self.assertEqual(card, self.storage.get_by_card_id(card.numero))
+        self.storage.clear()
+
+        self.assertEqual(None, self.storage.get_by_card_id(card.numero))
